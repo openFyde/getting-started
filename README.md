@@ -197,11 +197,26 @@ tar xzf r92_distfiles_cache.tar.gz
 cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2021.05.18.170403.tar.xz
 ```
 
+等待命令执行完成后，已进入 chroot 内部。`$HOME/.gitconfig` 的配置会被自动复制到 chroot 环境的 HOME 目录。
+
+由于在后面的编译过程中，还有可能从 gerrit.openfyde.cn 获取代码，所以此时还需要把 `$HOME/.ssh` 的文件复制进 chroot 环境内部。
+
+新建一个命令行窗口，在 chroot 外部执行命令，复制 ssh 公私钥到 chroot 内部。
+
+```shell
+cd $HOME/r92
+cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
+```
+
+然后回到之前已经处在 chroot 内部的窗口。
+
 ## 编译 amd64-fydeos
 
 跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md#Select-a-board) 步骤一致。
 
 下面的命令中 `(inside)` 表示这条命令在 chroot 环境内部执行。进入 chroot 环境后，默认所在的目录是 `$HOME/trunk/src/scripts`。
+
+首先执行 `ssh user@gerrit.openfyde.cn` 查看结果，确保在 chroot 内部可以从 gerrit.openfyde.cn 获取代码。
 
 ```shell
 (inside) export BOARD=amd64-fydeos
