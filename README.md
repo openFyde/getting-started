@@ -210,7 +210,7 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 
 然后回到之前已经处在 chroot 内部的窗口。
 
-## 编译 amd64-fydeos
+## 编译 amd64-openfyde
 
 跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md#Select-a-board) 步骤一致。
 
@@ -219,7 +219,7 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 首先执行 `ssh user@gerrit.openfyde.cn` 查看结果，确保在 chroot 内部可以从 gerrit.openfyde.cn 获取代码。
 
 ```shell
-(inside) export BOARD=amd64-fydeos
+(inside) export BOARD=amd64-openfyde
 (inside) setup_board --board=${BOARD}
 (inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov
 (inside) ./build_image --board=${BOARD} --noenable_rootfs_verification test
