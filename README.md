@@ -184,9 +184,9 @@ gclient runhooks -vvv
 
 ```shell
 cd $HOME/r92
-wget https://packages.cdn.openfyde.cn/distfiles/r92_distfiles_cache.tar.gz
+wget https://packages.cdn.openfyde.cn/distfiles/r92_distfiles_cache_r1.tar.gz
 
-tar xzf r92_distfiles_cache.tar.gz
+tar xzf r92_distfiles_cache_r1.tar.gz
 ```
 
 此时 `$HOME/r92/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
@@ -199,7 +199,7 @@ cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-
 
 等待命令执行完成后，已进入 chroot 内部。`$HOME/.gitconfig` 的配置会被自动复制到 chroot 环境的 HOME 目录。
 
-由于在后面的编译过程中，还有可能从 gerrit.openfyde.cn 获取代码，所以此时还需要把 `$HOME/.ssh` 的文件复制进 chroot 环境内部。
+由于在后面的编译过程中，还有可能从 gerrit.openfyde.cn 获取代码，所以此时还需要把 `$HOME/.ssh` 的文件复制进 chroot 环境内部。 另外由于编译时 emerge 命令不会读取 `$HOME/.gitconfig` 中的配置，所以需要把上述 `$HOME/.gitconfig` 中 `insteadOf` 配置内容复制到 chroot 环境中的 `/etc/gitconfig` 文件，如果 `/etc/gitconfig` 不存在，新建即可。
 
 新建一个命令行窗口，在 chroot 外部执行命令，复制 ssh 公私钥到 chroot 内部。
 
@@ -210,7 +210,7 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 
 然后回到之前已经处在 chroot 内部的窗口。
 
-## 编译 amd64-openfyde
+## 编译 amd64-openfyde/rpi4-openfyde
 
 跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md#Select-a-board) 步骤一致。
 
@@ -218,7 +218,9 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 
 首先执行 `ssh user@gerrit.openfyde.cn` 查看结果，确保在 chroot 内部可以从 gerrit.openfyde.cn 获取代码。
 
+
 ```shell
+(inside) export GERRIT_USERNAME=<user> # 把 <user> 替换为 gerrit 用户名
 (inside) export BOARD=amd64-openfyde
 (inside) setup_board --board=${BOARD}
 (inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov
