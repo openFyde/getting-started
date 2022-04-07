@@ -32,8 +32,6 @@ sudo update-alternatives --config python3
 
 ```shell
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-cd depot_tools
-git checkout 650f853ced2d5f740eb6e4a80edbf0d09351d10e
 ```
 
 然后把 `depot_tools` 目录加入到 `PATH` 变量中，并且 `depot_tools` 的路径要放在前部。
@@ -44,7 +42,6 @@ export PATH=/path/to/depot_tools:$PATH
 
 建议把上述语句加到 `~/.bashrc` 或 `~/.zshrc` 中。
 
-
 ### 同步代码
 
 首先创建目录，后续多数命令都在此目录 `$HOME/r96` 中执行：
@@ -52,12 +49,6 @@ export PATH=/path/to/depot_tools:$PATH
 ```shell
 mkdir $HOME/r96
 cd $HOME/r96
-```
-
-配置此条环境变量以禁止工具自行从 Google 服务器尝试升级，由于网络问题可能会导致卡死及失败：
-
-```shell
-export DEPOT_TOOLS_UPDATE=0
 ```
 
 执行 `repo init`；
@@ -92,10 +83,9 @@ repo sync
 
 `repo sync` 成功后，会看到 `repo sync has finished successfully.` 的信息。
 
-
 ## 创建 chroot 编译环境
 
-执行 `cros_sdk` 命令，通过 `--url` 指定 openFyde 提供的 sdk 包的链接。创建并进入 chroot 内部。
+执行 `cros_sdk` 命令，创建并进入 chroot 内部。
 
 ```shell
 cros_sdk --nouse-image
@@ -103,10 +93,9 @@ cros_sdk --nouse-image
 
 ## 编译 amd64-openfyde/rpi4-openfyde
 
-跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md#Select-a-board) 步骤一致。
+跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/release-R96-14268.B/developer_guide.md#Select-a-board) 步骤一致。
 
 下面的命令中 `(inside)` 表示这条命令在 chroot 环境内部执行。进入 chroot 环境后，默认所在的目录是 `$HOME/trunk/src/scripts`。
-
 
 ```shell
 (inside) export BOARD=amd64-openfyde
@@ -114,4 +103,3 @@ cros_sdk --nouse-image
 (inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov
 (inside) ./build_image --board=${BOARD} --noenable_rootfs_verification test
 ```
-
