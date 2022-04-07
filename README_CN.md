@@ -24,6 +24,7 @@ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2
 sudo update-alternatives --config python3
 ```
 
+
 ## 获取代码
 
 ### 安装 depot_tools
@@ -82,6 +83,26 @@ repo sync
 如果最终 `repo sync` 输出失败信息之后退出，可以稍后再次执行 `repo sync`，之前已下载到本地的内容不会重复下载。
 
 `repo sync` 成功后，会看到 `repo sync has finished successfully.` 的信息。
+
+### 同步 Chromium 依赖
+
+在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为
+了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
+
+```shell
+cd openfyde/chromium
+```
+
+确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链
+接），否则请回到上一步检查 `repo sync` 是否成功。
+
+然后执行 `gclient sync`，等待命令执行完成。
+
+```shell
+$ readlink .gclient
+../dotgclient/dotgclient
+$ gclient sync
+```
 
 ## 创建 chroot 编译环境
 
