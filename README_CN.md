@@ -88,7 +88,7 @@ repo sync
 
 `repo sync` 成功后，会看到 `repo sync has finished successfully.` 的信息。
 
-### 同步 Chromium 依赖
+#### 同步 Chromium 依赖
 
 在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为
 了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
