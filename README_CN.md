@@ -8,20 +8,24 @@
 * 内存不小于 8G
 * 硬盘剩余空间不小于 150G
 
-### 安装基础工具
+### 安装 Python 和其他基础工具
+
+目前需要的 Python 版本为 3.6 或更新版本。执行 `python -V` 确定 python 是所
+需版本，如果当前 python 的版本低于 3.6，那么需要卸载旧版，安装 3.6 或更新
+版本的 Python，或者使用 [pyenv](https://github.com/pyenv/pyenv)。
 
 ```shell
-sudo apt-get install git-core gitk git-gui curl lvm2 thin-provisioning-tools \
-     python-pkg-resources python-virtualenv python-oauth2client xz-utils \
-     python3.6
+sudo apt-get uninstall <current python package lower than 3.6>
+sudo apt-get install python3.9
 ```
 
-执行 `python3 --version` 确定 python3 版本，如果当前 python3 的默认版本是 3.5，那么需要切换到 3.6。
+然后安装其他基础工具
 
 ```shell
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 1
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2
-sudo update-alternatives --config python3
+sudo add-apt-repository universe
+sudo apt-get install git gitk git-gui curl xz-utils \
+     python3-pkg-resources python3-virtualenv python3-oauth2client \
+     lvm2 thin-provisioning-tools
 ```
 
 
