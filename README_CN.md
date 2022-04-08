@@ -28,7 +28,6 @@ sudo apt-get install git gitk git-gui curl xz-utils \
      lvm2 thin-provisioning-tools
 ```
 
-
 ## 获取代码
 
 ### 安装 depot_tools
