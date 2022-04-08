@@ -10,9 +10,9 @@
 
 ### 安装 Python 和其他基础工具
 
-目前需要的 Python 版本为 3.6 或更新版本。执行 `python -V` 确定 python 是所
-需版本，如果当前 python 的版本低于 3.6，那么需要卸载旧版，安装 3.6 或更新
-版本的 Python，或者使用 [pyenv](https://github.com/pyenv/pyenv)。
+目前需要的 Python 版本为 3.6 或更新版本。执行 `python -V` 确定 Python 是所需版本，如果当前
+Python 的版本低于 3.6，那么需要卸载旧版，安装 3.6 或更新版本的 Python，或者使用
+[pyenv](https://github.com/pyenv/pyenv)。
 
 ```shell
 sudo apt-get uninstall <current python package lower than 3.6>
@@ -89,15 +89,13 @@ repo sync
 
 #### 同步 Chromium 依赖
 
-在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为
-了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
+在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
 
 ```shell
 cd openfyde/chromium
 ```
 
-确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链
-接），否则请回到上一步检查 `repo sync` 是否成功。
+确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链接），否则请回到上一步检查 `repo sync` 是否成功。
 
 然后执行 `gclient sync`，等待命令执行完成。
 
