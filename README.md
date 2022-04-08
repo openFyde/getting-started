@@ -55,7 +55,7 @@
 
 <br><br>
 
-# Table of contents (for even cool kids)
+# Table of contents (for cool kids)
 
 <!-- TOC -->
 
@@ -70,7 +70,7 @@
 - [About us](#about-us)
   <!-- /TOC -->
 
-
+<br>
 
 # Introduction
 
@@ -113,7 +113,7 @@ release 96, better to rebase it to r96-dev.
  - Often we will be doing more than one releases for each repo manifest release number, so we will append meaningful string to the tag name to identify such. For example: `r96-borealis_enabled`
 
 
-## Naming Conventions
+## Naming conventions
 
 It's worth mentioning some of the naming conventions that we have been adhering to since the creation of openFyde to clear out confusions and maintain consistency:
 
@@ -127,7 +127,7 @@ It's worth mentioning some of the naming conventions that we have been adhering 
 
 
 
-## Typography Conventions
+## Typography conventions
 
 Shell Commands are shown with different labels to indicate whether they apply to 
 
@@ -142,7 +142,7 @@ Shell Commands are shown with different labels to indicate whether they apply to
 | (inside)  | inside the chroot on your build computer   |
 
 
-
+<br>
 
 # System requirement
 
@@ -159,12 +159,12 @@ Shell Commands are shown with different labels to indicate whether they apply to
 
    - Ubuntu Linux 18.04 LTS
    - Gentoo Linux
-   - Arch linux
+   - Arch Linux
 
 - A non-root user account with sudo access. The build process should be run by this user, not the root user. The user need to have _sudo_ access. For simplicity and convenience password-less sudo could be set for this user.
 
 
-
+<br>
 
 # Prepare the system
 
@@ -228,7 +228,7 @@ $ git config --global user.name "Your Name"
 ```
 
 
-
+<br>
 
 # Get source code
 
@@ -283,7 +283,7 @@ Apply for Google API on Google website per [this document](http://www.chromium.o
 Then the Chromium OS build script will read necessary information from this file automatically, and the image you build will allow Google ID login.
 
 
-
+<br>
 
 # Setup openFyde
 
@@ -309,8 +309,7 @@ $ gclient sync
 Once `gclient sync` is completed, chromium source folder is now fully setup.
 
 
-
-
+<br>
 
 # Build openFyde for amd64
 _and some development tips and tricks_
@@ -508,7 +507,7 @@ r96/src/build/images/amd64-openfyde/latest/chromiumos_image.bin
 in the host OS.
 
 
-
+<br>
 
 # Boot from the image
 
@@ -543,7 +542,7 @@ After the disk image is successfully written to the USB storage device, plug it 
 
 
 
-
+<br>
 
 # More information
 
@@ -554,7 +553,7 @@ After the disk image is successfully written to the USB storage device, plug it 
 [FydeOS official Telegram group](https://t.me/hi_fydeos), to say hi and get help.
 
 
-
+<br>
 
 # About us
 
