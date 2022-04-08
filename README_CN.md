@@ -97,16 +97,22 @@ repo init -u ssh://<gerrit_user>@gerrit.openfyde.cn/chromium.googlesource.com/ch
 
 ```shell
 mkdir openfyde
-git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev
+git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev_gitee
 ln -snfr openfyde/manifest .repo/local_manifests
 ```
 
 `openfyde/manifest` 中包含了 openfyde 的项目信息，通过 `.repo/local_manifests` 链接引入进来。
 
+在代码同步之前，需要使用 `manifest` 目录的 `gen_remotes.sh` 生成包含了 gerrit.openfyde.cn 地址和用户名的 `remotes.xml` 文件。
+
+```shell
+cd $HOME/r96/openfyde/manifest
+./gen_remotes.sh <gerrit_user>
+```
+
 之后进行代码同步操作，可以视机器配置和服务端状态，调整`-j` 或  `--jobs-network` 参数。具体的参数请执行 `repo sync --help` 或 `repo help sync` 查看。
 
-以下 `sync` 命令会从 gerrit.openfyde.cn 同步大量代码，耗时较久，请耐心等
-待：
+以下 `sync` 命令会从 gerrit.openfyde.cn 同步大量代码，耗时较久，请耐心等待：
 
 ```shell
 repo sync
@@ -122,10 +128,17 @@ repo sync
 
 在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
 
-首先确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链接），否则请回到上一步检查 `repo sync` 是否成功。
+首先要生成 `gclient sync` 所需的 `.gclient` 文件，从而达到用 gerrit.openfyde.cn 替换默认 URL 的目的。
 
 ```shell
-$ cd openfyde/chromium
+cd $HOME/r96/openfyde/dotgclient
+./gen_dotgclient.sh <gerrit_user>
+```
+
+确认在 chromium 目录存在 `.gclient` 链接到上一步生成的 `dotgclient` 文件。
+
+```shell
+$ cd $HOME/r96/openfyde/chromium
 $ readlink .gclient
 ../dotgclient/dotgclient
 ```
