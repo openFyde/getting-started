@@ -1,4 +1,4 @@
-# 快速开始
+# 快速开始 (WIP)
 
 ## 必备条件
 
@@ -30,12 +30,38 @@ sudo apt-get install git gitk git-gui curl xz-utils \
 
 ## 获取代码
 
+### gerrit 帐号权限
+
+### 帐号权限
+
+* 首先在 [https://account.fydeos.com](https://account.fydeos.com) 注册
+  FydeOS 帐号，用于登录 [https://gerrit.openfyde.cn](https://gerrit.openfyde.cn)。
+* 在 [https://gerrit.openfyde.cn/settings/#Profile](https://gerrit.openfyde.cn/settings/#Profile) 页面查看 Username，下文中以
+  `<gerrit_user>` 代替。
+* 在 [https://gerrit.openfyde.cn/settings/#SSHKeys](https://gerrit.openfyde.cn/settings/#SSHKeys) 添加自己的 ssh 公钥，点击 `SAVE
+  CHANGES` 保存后，在命令行执行 `ssh <gerrit_user>@gerrit.openfyde.cn` 并确认有登录权限，应该看到输出如下信息后自动退出。
+
+```txt
+  ****    Welcome to Gerrit Code Review    ****
+
+  Hi user, you have successfully connected over SSH.
+
+  Unfortunately, interactive shells are disabled.
+  To clone a hosted Git repository, use:
+
+  git clone ssh://<gerrit_user>@gerrit.openfyde.cn/REPOSITORY_NAME.git
+```
+
+请注意用自己的用户名替换后文中的`<gerrit_user>`。
+
 ### 安装 depot_tools
 
 获取 `depot_tools`
 
 ```shell
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+git clone ssh://<gerrit_user>@gerrit.openfyde.cn/chromium.googlesource.com/chromium/tools/depot_tools.git
+cd depot_tools
+git checkout e121d14b12412e95ac833cfd31602b674499ea25
 ```
 
 然后把 `depot_tools` 目录加入到 `PATH` 变量中，并且 `depot_tools` 的路径要放在前部。
@@ -55,19 +81,23 @@ mkdir $HOME/r96
 cd $HOME/r96
 ```
 
+配置此条环境变量以禁止工具自行从 Google 服务器尝试升级，由于网络问题可能会导致卡死及失败：
+
+```shell
+export DEPOT_TOOLS_UPDATE=0
+```
+
 执行 `repo init`；
 
 ```shell
-repo init -u https://chromium.googlesource.com/chromiumos/manifest -b release-R96-14268.B
+repo init -u ssh://<gerrit_user>@gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest -b release-R96-14268.B
 ```
 
 下一步，引入 openfyde 的各个项目代码：
 
 ```shell
 mkdir openfyde
-
-git clone https://github.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev
-
+git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev
 ln -snfr openfyde/manifest .repo/local_manifests
 ```
 
@@ -75,7 +105,8 @@ ln -snfr openfyde/manifest .repo/local_manifests
 
 之后进行代码同步操作，可以视机器配置和服务端状态，调整`-j` 或  `--jobs-network` 参数。具体的参数请执行 `repo sync --help` 或 `repo help sync` 查看。
 
-以下 `sync` 命令会 同步大量代码，耗时较久，请耐心等待：
+以下 `sync` 命令会从 gerrit.openfyde.cn 同步大量代码，耗时较久，请耐心等
+待：
 
 ```shell
 repo sync
@@ -91,27 +122,73 @@ repo sync
 
 在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
 
-```shell
-cd openfyde/chromium
-```
-
-确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链接），否则请回到上一步检查 `repo sync` 是否成功。
-
-然后执行 `gclient sync`，等待命令执行完成。
+首先确认此目录下存在文件 `.gclient`（指向 `../dotgclient/dotgclient` 的符号链接），否则请回到上一步检查 `repo sync` 是否成功。
 
 ```shell
+$ cd openfyde/chromium
 $ readlink .gclient
 ../dotgclient/dotgclient
-$ gclient sync
 ```
+
+多数的依赖内容都已经镜像至 gerrit.openfyde.cn，可以直接通过 `gclient` 工具获取。由于
+`openfyde/chromium/src/DEPS` 文件还有一部分内容由 [https: //chrome-infra-packages.appspot.com/](https://chrome-infra-packages.appspot.com/)提供，
+另外还会在同步代码后、执行 `DEPS` 中指定的 hooks 命令过程中从 google storage
+下载内容，网络不通的情况下无法访问到，暂时需要通过其他途径补全这部分内容，
+openFyde 提供了预先打包的文件供下载。
+
+```shell
+wget https://packages.cdn.openfyde.cn/chromium/r96/cipd_deps_96.0.4664.202.tar.gz
+tar xzf cipd_deps_96.0.4664.202.tar.gz
+gclient sync --nohooks -vvv
+```
+
+此处看到 `__init__:cipd ensure -log-level ......` 时，命令可能会卡住，此时可以按下
+ctrl+c 中止，所需内容已经由 `cipd_deps_96.0.4664.202.tar.gz` 提供。
+
+接下来需要完成代码同步之后的 hooks。
+
+```shell
+wget https://packages.cdn.openfyde.cn/chromium/r96/hooks_bin_96.0.4664.202.tar.gz
+tar xzf hooks_bin_96.0.4664.202.tar.gz
+gclient runhooks -vvv
+```
+
+最后可能会看到 generate_location_tags 失败的信息，可以忽略，所需文件已经由
+`hooks_bin_96.0.4664.202.tar.gz` 提供。
 
 ## 创建 chroot 编译环境
 
-执行 `cros_sdk` 命令，创建并进入 chroot 内部。
+由于 `cros_sdk` 命令在创建和进入 chroot 编译环境过程中，会更新 chroot
+内部的包，这个过程会由于网络问题无法编译某些包，导致命令失败，所以需要预先把编译过程中需要的文件准备好。openFyde
+提供了 chroot 编译环境完整的 `.cache` 目录打包文件。
 
 ```shell
-cros_sdk --nouse-image
+cd $HOME/r96
+wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache.tar.gz
+tar xzf r96_distfiles_cache.tar.gz
 ```
+
+此时 `$HOME/r96/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
+
+然后执行 `cros_sdk` 命令，通过 `--url` 指定 openFyde 提供的 sdk 包的链接。
+创建并进入 chroot 内部。
+
+```shell
+cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2021.10.05.002450.tar.xz
+```
+
+TODO: 验证编译过程中需要从 gerrit.openfyde.cn 获取代码的包。
+
+由于在后面的编译过程中，还有可能从 gerrit.openfyde.cn 获取代码，所以此时还需要把 `$HOME/.ssh` 的文件复制进 chroot 环境内部。
+
+新建一个命令行窗口，在 chroot 外部执行命令，复制 ssh 公私钥到 chroot 内部。
+
+```shell
+cd $HOME/r96
+cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
+```
+
+然后回到之前已经处在 chroot 内部的窗口。
 
 ## 编译 amd64-openfyde/rpi4-openfyde
 
