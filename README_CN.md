@@ -133,6 +133,8 @@ repo sync
 ```shell
 cd $HOME/r96/openfyde/dotgclient
 ./gen_dotgclient.sh <gerrit_user>
+cd $HOME/r96/openfyde
+ln -snfr dotgclient/dotgclient chromium/.gclient
 ```
 
 确认在 chromium 目录存在 `.gclient` 链接到上一步生成的 `dotgclient` 文件。
