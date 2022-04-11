@@ -38,21 +38,14 @@ sudo apt-get install git gitk git-gui curl xz-utils \
   FydeOS 帐号，用于登录 [https://gerrit.openfyde.cn](https://gerrit.openfyde.cn)。
 * 在 [https://gerrit.openfyde.cn/settings/#Profile](https://gerrit.openfyde.cn/settings/#Profile) 页面查看 Username，下文中以
   `<gerrit_user>` 代替。
-* 在 [https://gerrit.openfyde.cn/settings/#SSHKeys](https://gerrit.openfyde.cn/settings/#SSHKeys) 添加自己的 ssh 公钥，点击 `SAVE
-  CHANGES` 保存后，在命令行执行 `ssh <gerrit_user>@gerrit.openfyde.cn` 并确认有登录权限，应该看到输出如下信息后自动退出。
+* 在 [https://gerrit.openfyde.cn/settings/#HTTPCredentials](https://gerrit.openfyde.cn/settings/#HTTPCredentials) 生成并复制密码
+* 在 `$HOME/git-credentials` 加入以下内容，其中 `<gerrit_user>` 和 `<gerrit_password>` 用上一步获取到的 Username 和密码替换。
 
 ```txt
-  ****    Welcome to Gerrit Code Review    ****
-
-  Hi user, you have successfully connected over SSH.
-
-  Unfortunately, interactive shells are disabled.
-  To clone a hosted Git repository, use:
-
-  git clone ssh://<gerrit_user>@gerrit.openfyde.cn/REPOSITORY_NAME.git
+https://<gerrit_user>:<gerrit_password>@gerrit.openfyde.cn
 ```
 
-请注意用自己的用户名替换后文中的`<gerrit_user>`。
+执行 `git ls-remote https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest.git` 验证是否已经正确配置 gerrit.openfyde.cn 鉴权信息。
 
 ### 安装 depot_tools
 
