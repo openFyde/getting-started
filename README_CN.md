@@ -84,7 +84,8 @@ export DEPOT_TOOLS_UPDATE=0
 
 ```shell
 repo init -u https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest \
-          -b release-R96-14268.B
+          -b release-R96-14268.B \
+          --repo-url=https://gerrit.openfyde.cn/chromium.googlesource.com/external/repo
 ```
 
 下一步，引入 openfyde 的各个项目代码：
