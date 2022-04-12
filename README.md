@@ -294,7 +294,7 @@ Now fetch openFyde manifest, also create symlinks in the designated place to ove
 $ cd r96
 $ mkdir openfyde
 
-$ git clone https://github.com/openFyde/manifest.git openfyde/manifest -b r96
+$ git clone https://github.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev
 
 $ ln -snfr openfyde/manifest .repo/local_manifests
 ```
