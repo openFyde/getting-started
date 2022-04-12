@@ -158,8 +158,8 @@ gclient runhooks -vvv
 
 ```shell
 cd $HOME/r96
-wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache.tar.gz
-tar xzf r96_distfiles_cache.tar.gz
+wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache_r1.tar.gz
+tar xzf r96_distfiles_cache_r1.tar.gz
 ```
 
 此时 `$HOME/r96/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
