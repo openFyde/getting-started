@@ -431,6 +431,41 @@ The `--force` option will remove the existing board directory `/build/amd64-open
 
 ## Build packages
 
+### Install package `dev-libs/capnproto`
+
+Before start to build packages, the package `dev-libs/capnproto` should be modified manually then installed.
+
+```bash
+(inside)
+cp -r ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto \
+   /mnt/host/source/src/third_party/portage-stable/dev-libs/
+```
+
+Then edit the file `/mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild` and
+delete the `-with-external-capnp` in the function `src_configure`:
+
+```diff
+(inside)
+$ diff -u ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7.0.ebuild /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild
+--- /home/fangzhou/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7.0.ebuild        2022-03-08 06:15:21.482188084 +0000
++++ /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild   2022-03-08 08:40:12.064342028 +0000
+@@ -33,7 +33,7 @@
+ src_configure() {
+        econf \
+                $(use_enable static-libs static) \
+-               $(use_with ssl openssl) --with-external-capnp
++               $(use_with ssl openssl)
+
+ }
+```
+
+Install the package.
+```bash
+(inside)
+sudo emerge capnproto
+```
+
+### Build all packages
 Now it time to build all software packages for the amd64-openfyde board.
 
 ```bash
