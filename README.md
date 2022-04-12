@@ -302,6 +302,7 @@ Now let us start syncing:
 # Raise this number if you have a fast internet connection
 $ repo sync -j8
 
+$ cd openfyde/chromium
 $ gclient sync
 ```
 Fetching of Chromium OS source code may take more than 30 minutes depending on your connection speed, around 10GB of data will need to be downloaded primarily from googlesource.com, it'd be helpful if you have a decent internet speed to reach google's server.
