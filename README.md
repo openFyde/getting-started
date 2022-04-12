@@ -246,7 +246,7 @@ If you are building a different release, make sure you use the actual directory 
 
 
 
-## Fetch Chromium OS source code
+## Fetch Chromium OS repo
 
 First you need to find out the reference name of the release you would like to build, by visiting this page [https://chromium.googlesource.com/chromiumos/manifest.git](https://chromium.googlesource.com/chromiumos/manifest.git):
 
@@ -260,11 +260,7 @@ $ cd r96
 
 $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R96-14268.B
 
-# Raise this number if you have a fast internet connection
-$ repo sync -j8
 ```
-
-Fetching of Chromium OS source code may take more than 30 minutes depending on your connection speed, around 10GB of data will need to be downloaded primarily from googlesource.com, it'd be helpful if you have a decent internet speed to reach google's server.
 
 
 
@@ -303,8 +299,12 @@ Now let us start syncing:
 
 ```bash
 (outside)
+# Raise this number if you have a fast internet connection
+$ repo sync -j8
+
 $ gclient sync
 ```
+Fetching of Chromium OS source code may take more than 30 minutes depending on your connection speed, around 10GB of data will need to be downloaded primarily from googlesource.com, it'd be helpful if you have a decent internet speed to reach google's server.
 
 Once `gclient sync` is completed, chromium source folder is now fully setup.
 
