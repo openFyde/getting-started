@@ -1,3 +1,7 @@
+![openFyde Splash](https://fydeos.io/content/wp-content/uploads/2022/04/openfyde-splash.jpg, "openFyde Splash")
+
+<br>
+
 [<img src="https://img.shields.io/badge/Join%20Telegram%20Group-FydeOS-yellowgreen.svg?style=popout-square&logo=telegram&colorA=870611&colorB=333333">](https://t.me/hi_fydeos)
 
 <br>
