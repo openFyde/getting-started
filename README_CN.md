@@ -1,4 +1,6 @@
-# 快速开始 (WIP)
+![openFyde Splash](https://fydeos.io/content/wp-content/uploads/2022/04/openfyde-splash.jpg, "openFyde Splash")
+
+# 快速开始
 
 ## 必备条件
 
