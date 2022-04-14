@@ -202,7 +202,9 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 cp -r ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto \
    /mnt/host/source/src/third_party/portage-stable/dev-libs/
 ```
+
 然后需要修改复制过去的 capnproto ebuild 文件 /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild，删除此文件中 src_configure 函数的 --with-external-capnp。
+
 ```diff
 (inside)
 $ diff -u ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7.0.ebuild /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild
@@ -217,14 +219,29 @@ $ diff -u ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7
 
  }
 ```
+
 手动执行以下命令安装。
+
 ```bash
 (inside)
 sudo emerge capnproto
 ```
 
 接下来继续编译其他 packages 和 image。
+
 ```
 (inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov
+```
+
+为了缩短编译时长，`build_packages` 脚本在编译 chromeos-chrome （浏览器）包时，会从 [PORTAGE_BINHOST](https://wiki.gentoo.org/wiki/Binary_package_guide#Using_binary_packages)变量指定的服务端下载预编译的包。
+请手动执行命令编译 openFyde 修改过的版本。
+
+```shell
+emerge-amd64-openfyde chromeos-chrome chrome-icu
+```
+
+编译完成后，执行命令编译镜像文件。
+
+```shell
 (inside) ./build_image --board=${BOARD} --noenable_rootfs_verification test
 ```
