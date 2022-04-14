@@ -1,4 +1,4 @@
-![openFyde Splash](https://fydeos.io/content/wp-content/uploads/2022/04/openfyde-splash.jpg, "openFyde Splash")
+![openFyde Splash](https://fydeos.com/content/wp-content/uploads/2022/04/openfyde-splash-image.jpg, "openFyde Splash")
 
 # 快速开始
 
