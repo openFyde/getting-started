@@ -173,19 +173,6 @@ tar xzf r96_distfiles_cache_r1.tar.gz
 cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2021.10.05.002450.tar.xz
 ```
 
-TODO: 验证编译过程中需要从 gerrit.openfyde.cn 获取代码的包。
-
-由于在后面的编译过程中，还有可能从 gerrit.openfyde.cn 获取代码，所以此时还需要把 `$HOME/.ssh` 的文件复制进 chroot 环境内部。
-
-新建一个命令行窗口，在 chroot 外部执行命令，复制 ssh 公私钥到 chroot 内部。
-
-```shell
-cd $HOME/r96
-cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
-```
-
-然后回到之前已经处在 chroot 内部的窗口。
-
 ## 编译 amd64-openfyde/rpi4-openfyde
 
 跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/release-R96-14268.B/developer_guide.md#Select-a-board) 步骤一致。
