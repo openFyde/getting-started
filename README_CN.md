@@ -231,19 +231,7 @@ sudo emerge capnproto
 
 接下来继续编译其他 packages 和 image。
 
-```
-(inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov
-```
-
-为了缩短编译时长，`build_packages` 脚本在编译 chromeos-chrome （浏览器）包时，会从 [PORTAGE_BINHOST](https://wiki.gentoo.org/wiki/Binary_package_guide#Using_binary_packages)变量指定的服务端下载预编译的包。
-请手动执行命令编译 openFyde 修改过的版本。
-
 ```shell
-emerge-amd64-openfyde chromeos-chrome chrome-icu
-```
-
-编译完成后，执行命令编译镜像文件。
-
-```shell
+(inside) ./build_packages --board=${BOARD} --nowithautotest --autosetgov --nouse_any_chrome
 (inside) ./build_image --board=${BOARD} --noenable_rootfs_verification test
 ```

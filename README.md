@@ -474,7 +474,7 @@ Now it is time to build all software packages for the amd64-openfyde board.
 
 ```bash
 (inside)
-$ ./build_packages --board=amd64-openfyde --nowithautotest 
+$ ./build_packages --board=amd64-openfyde --nowithautotest --autosetgov --nouse_any_chrome
 # Append "--nowithautotest" to speed up the build process by skipping some tests
 ```
 
