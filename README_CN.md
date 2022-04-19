@@ -197,32 +197,7 @@ cp $HOME/.ssh/id_rsa* chroot/home/$(whoami)/.ssh
 (inside) setup_board --board=${BOARD}
 ```
 
-之后需要手动修改和安装输入法相关的包 `dev-libs/capnproto`
-
-```bash
-(inside)
-cp -r ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto \
-   /mnt/host/source/src/third_party/portage-stable/dev-libs/
-```
-
-然后需要修改复制过去的 capnproto ebuild 文件 /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild，删除此文件中 src_configure 函数的 --with-external-capnp。
-
-```diff
-(inside)
-$ diff -u ~/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7.0.ebuild /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild
---- /home/foo/chromiumos/src/overlays/project-ime/dev-libs/capnproto/capnproto-0.7.0.ebuild        2022-03-08 06:15:21.482188084 +0000
-+++ /mnt/host/source/src/third_party/portage-stable/dev-libs/capnproto/capnproto-0.7.0.ebuild   2022-03-08 08:40:12.064342028 +0000
-@@ -33,7 +33,7 @@
- src_configure() {
-        econf \
-                $(use_enable static-libs static) \
--               $(use_with ssl openssl) --with-external-capnp
-+               $(use_with ssl openssl)
-
- }
-```
-
-手动执行以下命令安装。
+之后需要手动为 chroot 环境编译输入法相关的包 `dev-libs/capnproto`。
 
 ```bash
 (inside)
