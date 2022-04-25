@@ -180,7 +180,7 @@ cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-
 下面的命令中 `(inside)` 表示这条命令在 chroot 环境内部执行。进入 chroot 环境后，默认所在的目录是 `$HOME/trunk/src/scripts`。
 
 ```shell
-(inside) export BOARD=amd64-openfyde
+(inside) export BOARD=amd64-openfyde # 对于 rpi4-openfyde 需要 export BOARD=rpi4-openfyde
 (inside) setup_board --board=${BOARD}
 ```
 
