@@ -94,7 +94,7 @@ repo init -u https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/man
 
 ```shell
 mkdir openfyde
-git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96_v14.1_dev_gitee
+git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96-dev-gitee
 ln -snfr openfyde/manifest .repo/local_manifests
 ```
 
