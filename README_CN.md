@@ -1,5 +1,7 @@
 ![openFyde Splash](https://fydeos.com/content/wp-content/uploads/2022/04/openfyde-splash-image.jpg, "openFyde Splash")
 
+本文内容并**不是** [README.md](README.md) 的中文翻译版本，而是针对中国大陆地区网络环境，对流程进行了修改，与 [README.md](README.md) 有所不同。
+
 # 快速开始
 
 ## 必备条件
