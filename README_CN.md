@@ -2,9 +2,11 @@
 
 本文内容并**不是** [README.md](README.md) 的中文翻译版本，而是针对中国大陆地区网络环境，对流程进行了修改，与 [README.md](README.md) 有所不同。
 
-# 快速开始
+<br>
 
-## 必备条件
+## 快速开始
+
+### 必备条件
 
 * Ubuntu Linux (version 18.04 - Bionic)
 * x86_64 64 位系统
@@ -32,11 +34,12 @@ sudo apt-get install git gitk git-gui curl xz-utils \
      lvm2 thin-provisioning-tools
 ```
 
+
+<br>
+
 ## 获取代码
 
-### gerrit 帐号权限
-
-### 帐号权限
+### gerrit 及帐号权限
 
 * 首先在 [https://account.fydeos.com](https://account.fydeos.com) 注册
   FydeOS 帐号，用于登录 [https://gerrit.openfyde.cn](https://gerrit.openfyde.cn)。
@@ -50,6 +53,7 @@ https://<gerrit_user>:<gerrit_password>@gerrit.openfyde.cn
 ```
 
 执行 `git ls-remote https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest.git` 验证是否已经正确配置 gerrit.openfyde.cn 鉴权信息。
+
 
 ### 安装 depot_tools
 
@@ -68,6 +72,7 @@ export PATH=/path/to/depot_tools:$PATH
 ```
 
 建议把上述语句加到 `~/.bashrc` 或 `~/.zshrc` 中。
+
 
 ### 同步代码
 
@@ -116,7 +121,8 @@ repo sync
 
 `repo sync` 成功后，会看到 `repo sync has finished successfully.` 的信息。
 
-#### 同步 Chromium 依赖
+
+### 同步 Chromium 依赖
 
 在 `repo sync` 之后，openfyde/chromium/src 应该已经存在 chromium 源码。为了顺利编译 chromium，需要把 chromium 所需依赖同步到本地。
 
@@ -154,6 +160,9 @@ gclient runhooks -vvv
 最后可能会看到 generate_location_tags 失败的信息，可以忽略，所需文件已经由
 `hooks_bin_96.0.4664.202.tar.gz` 提供。
 
+
+<br>
+
 ## 创建 chroot 编译环境
 
 由于 `cros_sdk` 命令在创建和进入 chroot 编译环境过程中，会更新 chroot
@@ -174,6 +183,8 @@ tar xzf r96_distfiles_cache_r1.tar.gz
 ```shell
 cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2021.10.05.002450.tar.xz
 ```
+
+<br>
 
 ## 编译 amd64-openfyde/rpi4-openfyde
 

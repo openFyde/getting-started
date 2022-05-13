@@ -6,7 +6,7 @@
 
 <br>
 
-# TL;DR: (in FAQ format)
+## TL;DR: (in FAQ format)
 
 <details>
   <summary>What's this, is this openFyde?</summary>
@@ -59,7 +59,7 @@
 
 <br><br>
 
-# Table of contents (for cool kids)
+## Table of contents (for cool kids)
 
 <!-- TOC -->
 
@@ -71,17 +71,17 @@
 - [Build openFyde for amd64](#build-openfyde-for-amd64)
 - [Boot from the image](#boot-from-the-image)
 - [More information](#more-information)
-- [About us](#about-us)
+- [Last but not least](#last-but-not-least)
   <!-- /TOC -->
 
 <br>
 
-# Introduction
+## Introduction
 
 The following sections of this document describe how to build [openFyde](https://openfyde.io) and run it on x86 machines, from its source code and the board overlay provided by openFyde. Once you are familiar with how things work, you will be able to create your own board overlay and port openFyde to your hardware devices.
 
 
-## Goal and non-goal of this project
+### Goal and non-goal of this project
 
 * To provide an open-source codebase that everybody can use to build and improve openFyde on various platforms.
 * To provide a path that some users/developers can port hardware drivers that openFyde/FydeOS does not currently have.
@@ -89,7 +89,7 @@ The following sections of this document describe how to build [openFyde](https:/
 * This project does not aim to provide support for Chromium OS itself. If you find bugs and glitches, please report to [crbugs](https://bugs.chromium.org/p/chromium/issues/list); if you have further queries regarding Chromium OS, please revert to one of the official Chromium related [Google groups](https://www.chromium.org/developers/technical-discussion-groups).
 
 
-## About the openFyde project
+### About the openFyde project
 
 openFyde refers to a collection of projects and repositories working together to serve a unified goal.
 
@@ -103,7 +103,7 @@ The code and document in openFyde are the result of works by the people of the o
 
 
 
-## Branches and tags in repositories within openFyde
+### Branches and tags in repositories within openFyde
 
 #### branches
 
@@ -117,7 +117,7 @@ release 96, better to rebase it to r96-dev.
  - Often we will be doing more than one release for each repo manifest release number, so we will append a meaningful string to the tag name to identify such. For example: `r96-borealis_enabled`
 
 
-## Naming conventions
+### Naming conventions
 
 It's worth mentioning some of the naming conventions that we have been adhering to since the creation of openFyde to clear out confusion and maintain consistency:
 
@@ -131,7 +131,7 @@ It's worth mentioning some of the naming conventions that we have been adhering 
 
 
 
-## Typography conventions
+### Typography conventions
 
 Shell Commands are shown with different labels to indicate whether they apply to 
 
@@ -148,7 +148,7 @@ Shell Commands are shown with different labels to indicate whether they apply to
 
 <br>
 
-# System requirement
+## System requirement
 
 - A x86_64 system to perform the build. 64-bit hardware and OS are musts. The openFyde (and Chromium OS) is a very large project, building from the source from scratch usually takes hours to over 10 hours, depending on the system configuration.
    - CPU: we recommend using a 4-core or higher processor. The openFyde build process runs in parallel so more cores can help shorten build time dramatically.
@@ -170,10 +170,10 @@ Shell Commands are shown with different labels to indicate whether they apply to
 
 <br>
 
-# Prepare the system
+## Prepare the system
 
 
-## Install necessary tools
+### Install necessary tools
 
 Git and curl as the essential tools that need to be installed in the host OS, you will also need Python3 for most of the scripting work in the build process.
 
@@ -195,7 +195,7 @@ This command also installs git's graphical front end (`git gui`) and revision hi
 
 
 
-## Install Google depot_tools
+### Install Google depot_tools
 
 The depot_tools is a package of useful scripts, provided by Google, to manage source code checkouts and code reviews. We need it to fetch the Chromium OS source code.
 
@@ -221,7 +221,7 @@ Then re-login to your shell session to make the above changes take effect.
 
 
 
-## Configure git
+### Configure git
 
 You should configure git now or it may complain in some operations later.
 
@@ -234,9 +234,9 @@ $ git config --global user.name "Your Name"
 
 <br>
 
-# Get source code
+## Get source code
 
-## Create directory structure
+### Create directory structure
 
 The directory structure described here is a recommendation based on the best practice in the Fyde Innovations team. You may host the files in a different way as you wish.
 
@@ -250,7 +250,7 @@ If you are building a different release, make sure you use the actual directory 
 
 
 
-## Fetch Chromium OS repo
+### Fetch Chromium OS repo
 
 First, you need to find out the reference name of the release you would like to build, by visiting this page [https://chromium.googlesource.com/chromiumos/manifest.git](https://chromium.googlesource.com/chromiumos/manifest.git):
 
@@ -268,7 +268,7 @@ $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-
 
 
 
-## Request for Google API key
+### Request for Google API key
 
 If you would like to login into the Chromium OS GUI by using your Google account, you will need to request for Google API key and include them in the disk image you build. 
 
@@ -285,7 +285,7 @@ Then the Chromium OS build script will read the necessary information from this 
 
 <br>
 
-# Setup openFyde
+## Setup openFyde
 
 Now fetch openFyde manifest, also create symlinks in the designated place to override the default one used by Chromium OS.
 
@@ -316,10 +316,10 @@ Once `gclient sync` is completed, the chromium source folder is now fully set up
 
 <br>
 
-# Build openFyde for amd64
+## Build openFyde for amd64
 _and some development tips and tricks_
 
-## Create the chroot
+### Create the chroot
 
 As mentioned above, a chroot environment will be used to run the actual build process and some other related tasks. To create the chroot environment, run the commands below:
 
@@ -368,7 +368,7 @@ $ cros_sdk --delete
 
 
 
-## To enter the chroot again
+### To enter the chroot again
 
 Now we can enter the chroot.
 
@@ -380,7 +380,7 @@ $ cros_sdk
 
 
 
-## Set password for the chronos user
+### Set password for the chronos user
 
 The chronos user is used to log into the command line interface of Chromium OS, via ssh, local console or the shell in crosh interface. It is recommended that a password is set for this user so you can login as this user and also can do `sudo` in the Chromium OS command line, for advanced tasks.
 
@@ -397,7 +397,7 @@ The password is encrypted and saved in the file `/etc/shared_user_passwd.txt` in
 
 
 
-## Setup board amd64-openfyde
+### Setup board amd64-openfyde
 
 In the Chromium OS terminology, a board refers to a class of computer platforms with distinct hardware configurations. The board will be used as a target in the process of building software packages and disk images for that specific computer platform.
 
@@ -433,9 +433,9 @@ The `--force` option will remove the existing board directory `/build/amd64-open
 
 
 
-## Build packages
+### Build packages
 
-### Install package `dev-libs/capnproto`
+#### Install package `dev-libs/capnproto`
 
 Before starting to build packages, the package `dev-libs/capnproto` should be installed.
 
@@ -444,7 +444,7 @@ Before starting to build packages, the package `dev-libs/capnproto` should be in
 sudo emerge capnproto
 ```
 
-### Build all packages
+#### Build all packages
 Now it is time to build all software packages for the amd64-openfyde board.
 
 ```bash
@@ -459,7 +459,7 @@ It may take hours depending on your processor power, your memory size, your disk
 - On a Workstation-grade server with AMD Threadripper 3990x CPU with 64-core 128-thread, 128GB memory and 300Mb broadband, it takes 44mins for the command to finish.
 
 
-### Things to note
+#### Things to note
 
 - **What is happening now**
 
@@ -488,7 +488,7 @@ It may take hours depending on your processor power, your memory size, your disk
 
 
 
-## Build the disk image
+### Build the disk image
 
 After the build_packages command is finished successfully, you can start building the disk image.
 
@@ -524,13 +524,13 @@ in the host OS.
 
 <br>
 
-# Boot from the image
+## Boot from the image
 
 We need to write the previously generated disk image onto a USB storage device (preferably a higher speed USB HDD), at least 8GB capacity is required.
 
 
 
-## Write the disk image to a USB storage device
+### Write the disk image to a USB storage device
 
 There are two usual ways to write the Chromium OS disk image to a USB storage device. You can copy the image out to another Windows/macOS/Linux system and write it using your favourite GUI/CLI application.
 
@@ -551,7 +551,7 @@ This asks to write the latest disk image to USB removable media. A list of USB r
 
 
 
-## Boot from the USB storage device
+### Boot from the USB storage device
 
 After the disk image is successfully written to the USB storage device, plug it into your PC and boot it as usual. After a few seconds, you will see a Chromium logo, momentarily it will boot into GUI mode and the first time setup screen (OOBE) will pop up for you to configure the system and sign in.
 
@@ -559,7 +559,7 @@ After the disk image is successfully written to the USB storage device, plug it 
 
 <br>
 
-# More information
+## More information
 
 [Chromium OS Developer Guide](http://www.chromium.org/chromium-os/developer-guide). This is the official source of how to build Chromium OS
 
@@ -568,10 +568,9 @@ After the disk image is successfully written to the USB storage device, plug it 
 [FydeOS official Telegram group](https://t.me/hi_fydeos), to say hi and get help.
 
 
+
 <br>
 
-# About us
+## Last but not least
 
-Fyde began with a vision where all applications and services we use today will be living in the Cloud. We believed that with the ever-advancing browser platform technology and web frontend performances, it’s not surprising that most things we do today with the internet can be done through a single browser window. We are stepping into an era where installable apps will soon become history. FydeOS is our answer to this new era of computing.
-
-FydeOS is a simple, secure, fast and productive operating system. Based on the open-source Chromium Project that also powers the well-known Google Chromebooks. FydeOS inherits most of the benefits that Chromebooks have but is also bundled with our enhancements and new features. We have turned FydeOS into a more open platform, users will no longer be forced to rely on Google services and have the freedom to choose whichever services they prefer. We have also made FydeOS run on a wider range of hardware platforms ranging from x86 PCs and ARM-based single board computers, providing endless possibilities and potentials of how FydeOS can be used and applied.
+openFyde and FydeOS are made possible by gentle souls with real ❤️
