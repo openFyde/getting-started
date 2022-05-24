@@ -141,8 +141,8 @@ $ readlink .gclient
 openFyde 提供了预先打包的文件供下载。
 
 ```shell
-wget https://packages.cdn.openfyde.cn/chromium/r96/cipd_deps_96.0.4664.202.tar.gz
-tar xzf cipd_deps_96.0.4664.202.tar.gz
+wget https://packages.cdn.openfyde.cn/chromium/r96/cipd_deps_96.0.4664.208.tar.gz
+tar xzf cipd_deps_96.0.4664.208.tar.gz
 gclient sync --nohooks -vvv
 ```
 
@@ -152,13 +152,13 @@ ctrl+c 中止，所需内容已经由 `cipd_deps_96.0.4664.202.tar.gz` 提供。
 接下来需要完成代码同步之后的 hooks。
 
 ```shell
-wget https://packages.cdn.openfyde.cn/chromium/r96/hooks_bin_96.0.4664.202.tar.gz
-tar xzf hooks_bin_96.0.4664.202.tar.gz
+wget https://packages.cdn.openfyde.cn/chromium/r96/hooks_bin_96.0.4664.208.tar.gz
+tar xzf hooks_bin_96.0.4664.208.tar.gz
 gclient runhooks -vvv
 ```
 
 最后可能会看到 generate_location_tags 失败的信息，可以忽略，所需文件已经由
-`hooks_bin_96.0.4664.202.tar.gz` 提供。
+`hooks_bin_96.0.4664.208.tar.gz` 提供。
 
 
 <br>
@@ -171,8 +171,8 @@ gclient runhooks -vvv
 
 ```shell
 cd $HOME/r96
-wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache_r1.tar.gz
-tar xzf r96_distfiles_cache_r1.tar.gz
+wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache_r2.tar.gz
+tar xzf r96_distfiles_cache_r2.tar.gz
 ```
 
 此时 `$HOME/r96/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
