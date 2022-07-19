@@ -268,7 +268,7 @@ $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-
 
 
 
-### Request for Google API key
+### Request for Google and FydeOS API keys
 
 If you would like to login into the Chromium OS GUI by using your Google account, you will need to request for Google API key and include them in the disk image you build. 
 
@@ -280,7 +280,17 @@ Apply for Google API on the Google website per [this document](http://www.chromi
 'google_default_client_secret': 'your client secret',
 ```
 
-Then the Chromium OS build script will read the necessary information from this file automatically, and the image you build will allow Google ID login.
+Similarly, if you wish to utilise FydeOS online account and sync features provided by https://account.fydeos.com, you will need to apply for an openFyde Developer API key and include it in the same `~/.googleapikeys` file. At this moment the application is done manually by sending an email to [dev-support@openfyde.io](mailto:dev-support@openfyde.io) including your FydeOS account(you can sign up for a new one if you don't have it already) details, the team will process your application as soon as possible.
+
+Once you have your openFyde Developer API key, you need to append them to the `~/.googleapikeys` file in the format as below:
+
+```
+'fydeos_default_client_id' : 'your openFyde Developer API client id',
+'fydeos_default_client_secret' : 'your openFyde Developer API client secret',
+
+```
+
+Then the Chromium OS build script will read the necessary information from this file automatically, and the image you build will allow Google account as well as FydeOS account sign-in.
 
 
 <br>
