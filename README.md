@@ -108,13 +108,13 @@ The code and document in openFyde are the result of works by the people of the o
 #### branches
 
  - `main` or `master` - this branch can be used to build an openFyde image. It has been tested against our current release version. You are welcome to test it with future releases and send feedback and/or PRs.
- - `$release-dev` e.g. 'r96-dev' - this branch would be the develop branch for $release e.g. r96. If you are going to create PRs to
-release 96, better to rebase it to r96-dev.
+ - `$release-dev` e.g. 'r102-dev' - this branch would be the develop branch for $release e.g. r102. If you are going to create PRs to
+release 102, better to rebase it to r102-dev.
 
 #### tags
 
- - When we do release a prebuilt image, the commit would be tagged with a release number corresponding to the repo manifest. For example, if the repo manifest release is `release-R96-14268.B`, then our release tag would be `r96`.
- - Often we will be doing more than one release for each repo manifest release number, so we will append a meaningful string to the tag name to identify such. For example: `r96-borealis_enabled`
+ - When we do release a prebuilt image, the commit would be tagged with a release number corresponding to the repo manifest. For example, if the repo manifest release is `release-R102-14695.B`, then our release tag would be `r102`.
+ - Often we will be doing more than one release for each repo manifest release number, so we will append a meaningful string to the tag name to identify such. For example: `r102-borealis_enabled`
 
 
 ### Naming conventions
@@ -123,10 +123,10 @@ It's worth mentioning some of the naming conventions that we have been adhering 
 
  - We use the dash `-` in strings to connect words/substrings with different realms or representations. Some examples:
      - `<prefix>-<version>-<suffix>`: `openFyde-14.1-prebuild`
-     - `<release number>-<branch type>`: `r96-dev`
+     - `<release number>-<branch type>`: `r102-dev`
  - The underscore `_` is usually used in strings to connect words with spaces within the same realm or representation. Some examples:
      - `chromium_os-release-raspberry_pi`
-     - `r96-borealis_enabled`
+     - `r102-borealis_enabled`
  - To name a bunch of items (files, classes, variables, branches, tags etc.), use a common prefix so they can be indexed and searched easily
 
 
@@ -243,7 +243,7 @@ The directory structure described here is a recommendation based on the best pra
 ```bash
 (outside)
 # This is the directory to hold Chromium OS source code， aka cros-sdk
-$ mkdir -p r96
+$ mkdir -p r102
 ```
 
 If you are building a different release, make sure you use the actual directory name on your own system, the name here mentioned is just an example.
@@ -254,15 +254,15 @@ If you are building a different release, make sure you use the actual directory 
 
 First, you need to find out the reference name of the release you would like to build, by visiting this page [https://chromium.googlesource.com/chromiumos/manifest.git](https://chromium.googlesource.com/chromiumos/manifest.git):
 
-You will see a list of git commit IDs and its name in the form of `refs/heads/release-Rxx-xxxx.B`. That `release-Rxx-XXXX.B` link is what you need for fetching the code of that specific Chromium OS release. For example, [release-R96-14268.B](https://chromium.googlesource.com/chromiumos/manifest.git/+/refs/heads/release-R96-14268.B) for release r96.
+You will see a list of git commit IDs and its name in the form of `refs/heads/release-Rxx-xxxx.B`. That `release-Rxx-XXXX.B` link is what you need for fetching the code of that specific Chromium OS release. For example, [release-R102-14695.B](https://chromium.googlesource.com/chromiumos/manifest.git/+/refs/heads/release-R102-14695.B) for release r102.
 
 Now run these commands to fetch the source code. Find and use a different release name if you would like to build a different release.
 
 ```bash
 (outside)
-$ cd r96
+$ cd r102
 
-$ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R96-14268.B
+$ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R102-14695.B
 
 ```
 
@@ -301,10 +301,10 @@ Now fetch openFyde manifest, also create symlinks in the designated place to ove
 
 ```bash
 (outside)
-$ cd r96
+$ cd r102
 $ mkdir openfyde
 
-$ git clone https://github.com/openFyde/manifest.git openfyde/manifest -b r96-dev
+$ git clone https://github.com/openFyde/manifest.git openfyde/manifest -b r102-dev
 
 $ ln -snfr openfyde/manifest .repo/local_manifests
 ```
@@ -335,7 +335,7 @@ As mentioned above, a chroot environment will be used to run the actual build pr
 
 ```
 (outside)
-$ cd r96
+$ cd r102
 $ cros_sdk
 ```
 
@@ -344,7 +344,7 @@ If you wish to build your own chromium and you have followed the steps to set it
 
 ```bash
 (outside)
-$ cd r96
+$ cd r102
 $ cros_sdk --chrome-root /path/to/your/chromium #absolute path needed
 ```
 
@@ -353,10 +353,10 @@ It may take around 30 minutes depending on your internet connection speed and di
 
 ```
 (inside)
-(release-R96-14268.B//(xxxxxx...)) <user>@<host> ~/trunk/src/scripts $
+(release-R102-14695.B/(xxxxxx...)) <user>@<host> ~/trunk/src/scripts $
 ```
 
-The chroot environment is located under the `r96/chroot` directory.
+The chroot environment is located under the `r102/chroot` directory.
 
 Let's exit from the chroot first as we need to do some customisation before moving on. Type `exit` or `ctrl + d` to exit from the chroot shell.
 
@@ -372,7 +372,7 @@ The correct way to remove the chroot is by using the commands below:
 
 ```bash
 (outside)
-$ cd r96
+$ cd r102
 $ cros_sdk --delete
 ```
 
@@ -384,7 +384,7 @@ Now we can enter the chroot.
 
 ```bash
 (outside)
-$ cd r96
+$ cd r102
 $ cros_sdk
 ```
 
@@ -513,9 +513,9 @@ It may take 10 to 30 minutes, mainly depending on the speed of your disk. It wil
 
 ### Find your image
 
-After the command finished successfully, you will have disk images generated, saved under `/mnt/host/source/src/build/images/amd64-openfyde/` directory in the chroot, or `r96/src/build/images/amd64-openfyde` in the host OS. These two are the same directory, just bind mounted in the chroot.
+After the command finished successfully, you will have disk images generated, saved under `/mnt/host/source/src/build/images/amd64-openfyde/` directory in the chroot, or `r102/src/build/images/amd64-openfyde` in the host OS. These two are the same directory, just bind mounted in the chroot.
 
-Each time the build_image command gets invoked it will create a directory named similar to `R96-XXXX.XXX.<date time>-a1` under above directory. There is a symlink named `latest` under the above directory, it always points to the image directory of the last successful build.
+Each time the build_image command gets invoked it will create a directory named similar to `R102-XXXX.XXX.<date time>-a1` under above directory. There is a symlink named `latest` under the above directory, it always points to the image directory of the last successful build.
 
 The disk image is usually named `chromiumos_image.bin`, under the abovementioned directory. So full path to the latest image is
 
@@ -526,7 +526,7 @@ The disk image is usually named `chromiumos_image.bin`, under the abovementioned
 in the chroot, and
 
 ```
-r96/src/build/images/amd64-openfyde/latest/chromiumos_image.bin
+r102/src/build/images/amd64-openfyde/latest/chromiumos_image.bin
 ```
 
 in the host OS.
