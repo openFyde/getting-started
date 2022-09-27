@@ -102,10 +102,16 @@ sudo apt-get install git gitk git-gui curl xz-utils \
 * 在 [https://gerrit.openfyde.cn/settings/#Profile](https://gerrit.openfyde.cn/settings/#Profile) 页面查看 Username，下文中以
   `<gerrit_user>` 代替。
 * 在 [https://gerrit.openfyde.cn/settings/#HTTPCredentials](https://gerrit.openfyde.cn/settings/#HTTPCredentials) 生成并复制密码
-* 在 `$HOME/git-credentials` 加入以下内容，其中 `<gerrit_user>` 和 `<gerrit_password>` 用上一步获取到的 Username 和密码替换。
+* 在 `$HOME/.git-credentials` 加入以下内容，其中 `<gerrit_user>` 和 `<gerrit_password>` 用上一步获取到的 Username 和密码替换。
 
 ```txt
 https://<gerrit_user>:<gerrit_password>@gerrit.openfyde.cn
+```
+
+* 然后配置使用密码验证 gerrit 权限
+
+```shell
+git config --global credential.helper store
 ```
 
 执行 `git ls-remote https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest.git` 验证是否已经正确配置 gerrit.openfyde.cn 鉴权信息。
@@ -132,11 +138,11 @@ export PATH=/path/to/depot_tools:$PATH
 
 ### 同步代码
 
-首先创建目录，后续多数命令都在此目录 `$HOME/r96` 中执行：
+首先创建目录，后续多数命令都在此目录 `$HOME/r102` 中执行：
 
 ```shell
-mkdir $HOME/r96
-cd $HOME/r96
+mkdir $HOME/r102
+cd $HOME/r102
 ```
 
 配置此条环境变量以禁止工具自行从 Google 服务器尝试升级，由于网络问题可能会导致卡死及失败：
@@ -145,19 +151,25 @@ cd $HOME/r96
 export DEPOT_TOOLS_UPDATE=0
 ```
 
+配置 git 用户名和邮箱:
+
+```shell
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
+
 执行 `repo init`；
 
 ```shell
 repo init -u https://gerrit.openfyde.cn/chromium.googlesource.com/chromiumos/manifest \
-          -b release-R96-14268.B \
+          -b release-R102-14695.B \
           --repo-url=https://gerrit.openfyde.cn/chromium.googlesource.com/external/repo
 ```
 
 下一步，引入 openfyde 的各个项目代码：
 
 ```shell
-mkdir openfyde
-git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r96-dev-gitee
+git clone https://gitee.com/openFyde/manifest.git openfyde/manifest -b r102-dev-gitee
 ln -snfr openfyde/manifest .repo/local_manifests
 ```
 
@@ -185,7 +197,7 @@ repo sync
 确认在 chromium 目录存在 `.gclient` 链接到上一步生成的 `dotgclient` 文件。
 
 ```shell
-$ cd $HOME/r96/openfyde/chromium
+$ cd $HOME/r102/openfyde/chromium
 $ readlink .gclient
 ../dotgclient/dotgclient
 ```
@@ -197,24 +209,23 @@ $ readlink .gclient
 openFyde 提供了预先打包的文件供下载。
 
 ```shell
-wget https://packages.cdn.openfyde.cn/chromium/r96/cipd_deps_96.0.4664.208.tar.gz
-tar xzf cipd_deps_96.0.4664.208.tar.gz
+wget https://packages.cdn.openfyde.cn/chromium/r102/cipd_deps_102.0.5005.90.tar.gz
+tar xzf cipd_deps_102.0.5005.90.tar.gz
 gclient sync --nohooks -vvv
 ```
 
 此处看到 `__init__:cipd ensure -log-level ......` 时，命令可能会卡住，此时可以按下
-ctrl+c 中止，所需内容已经由 `cipd_deps_96.0.4664.202.tar.gz` 提供。
+ctrl+c 中止，所需内容已经由 `cipd_deps_102.0.5005.90.tar.gz` 提供。
 
 接下来需要完成代码同步之后的 hooks。
 
 ```shell
-wget https://packages.cdn.openfyde.cn/chromium/r96/hooks_bin_96.0.4664.208.tar.gz
-tar xzf hooks_bin_96.0.4664.208.tar.gz
+wget https://packages.cdn.openfyde.cn/chromium/r102/hooks_bin_102.0.5005.90.tar.gz
+tar xzf hooks_bin_102.0.5005.90.tar.gz
 gclient runhooks -vvv
 ```
 
-最后可能会看到 generate_location_tags 失败的信息，可以忽略，所需文件已经由
-`hooks_bin_96.0.4664.208.tar.gz` 提供。
+最后可能会看到 generate_location_tags 失败的信息，可以忽略，所需文件已经由 `hooks_bin_102.0.5005.90.tar.gz` 提供。
 
 
 <br>
@@ -252,25 +263,25 @@ gclient runhooks -vvv
 提供了 chroot 编译环境完整的 `.cache` 目录打包文件。
 
 ```shell
-cd $HOME/r96
-wget https://packages.cdn.openfyde.cn/distfiles/r96/r96_distfiles_cache_r2.tar.gz
-tar xzf r96_distfiles_cache_r2.tar.gz
+cd $HOME/r102
+wget https://packages.cdn.openfyde.cn/distfiles/r102/r102_distfiles_cache.tar.gz
+tar xzf r102_distfiles_cache.tar.gz
 ```
 
-此时 `$HOME/r96/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
+此时 `$HOME/r102/.cache` 目录中已经有了后续编译需要下载的各个源码包文件。
 
 然后执行 `cros_sdk` 命令，通过 `--url` 指定 openFyde 提供的 sdk 包的链接。
 创建并进入 chroot 内部。
 
 ```shell
-cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2021.10.05.002450.tar.xz
+cros_sdk --nouse-image --url=https://gs.cdn.openfyde.cn/chromiumos-sdk/cros-sdk-2022.04.11.135343.tar.xz
 ```
 
 <br>
 
 ## 编译 amd64-openfyde/rpi4-openfyde
 
-跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/release-R96-14268.B/developer_guide.md#Select-a-board) 步骤一致。
+跟 Google 官方 [Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/release-R102-14695.B/developer_guide.md#Select-a-board) 步骤一致。
 
 下面的命令中 `(inside)` 表示这条命令在 chroot 环境内部执行。进入 chroot 环境后，默认所在的目录是 `$HOME/trunk/src/scripts`。
 
