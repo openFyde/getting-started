@@ -45,7 +45,7 @@
   <br>
 
   你不能在当前的这个仓库中提交 issue，因为它只起到介绍和指导的作用。我们欢迎你在其他 openFyde 仓库中提交 issue，如果:
-   - 你已经阅读了整个 [Chromium OS Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/main/main/developer_guide.md) 以及下面的 README，在构建 openFyde 后依然遇到了问题。
+   - 你已经阅读了整个 [Chromium OS Developer Guide](https://chromium.googlesource.com/chromiumos/docs/+/main/developer_guide.md) 以及下面的 README，在构建 openFyde 后依然遇到了问题。
    - 你认为 openFyde 的某些功能实现 / 代码片段 / ebuilds / 配置方案 / 脚本不能正常工作。
    - 你在 openFyde 中发现了安全相关的 bug 或漏洞。
    - 你认为 openFyde 公布的部分代码完全是垃圾，而且你有强有力的证据来支持你的结论。
