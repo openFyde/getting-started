@@ -1,8 +1,8 @@
-![openFyde Splash](https://fydeos.io/content/wp-content/uploads/2022/04/openfyde-splash-image.jpg, "openFyde Splash")
+![openFyde Splash](https://fydeos.io/content/wp-content/uploads/2022/04/openfyde-splash-image.jpg "openFyde Splash")
 
 <br>
 
-[<img src="https://img.shields.io/endpoint?style=flat&color=fedcba&url=https://telegram-badge-t2fuv4m3rno2.runkit.sh/?url=https://t.me/hi_fydeos">](https://t.me/hi_fydeos)
+[![Telegram](https://img.shields.io/badge/Telegram-Join%20Community-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/hi_fydeos)
 
 <br>
 
